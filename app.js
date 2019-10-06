@@ -1,5 +1,6 @@
 const btn = document.querySelector(".talk");
 const content = document.querySelector(".content");
+const activate = document.querySelector(".activate");
 
 const greetings = [
   "Im good you little piece of love",
@@ -14,7 +15,7 @@ const SpeechRecognition =
 const recognition = new SpeechRecognition();
 
 recognition.onstart = function() {
-  console.log("voice is activated");
+  activate.innerText = "voice is activated";
 };
 
 recognition.onresult = function(event) {
@@ -22,6 +23,7 @@ recognition.onresult = function(event) {
 
   const transcript = event.results[current][0].transcript;
   content.textContent = transcript;
+  activate.innerText = "";
   readOutLoud(transcript);
 };
 
@@ -36,6 +38,9 @@ function readOutLoud(message) {
 
   if (message.includes("how are you")) {
     const finalText = greetings[Math.floor(Math.random() * greetings.length)];
+    speech.text = finalText;
+  } else if (message.includes("weather")) {
+    const finalText = weather[Math.floor(Math.random() * weather.length)];
     speech.text = finalText;
   }
 
